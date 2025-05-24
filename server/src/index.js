@@ -102,6 +102,10 @@ app.get('/health', (req, res) => {
   });
 });
 
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 // Enhanced error handling middleware
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
@@ -137,7 +141,7 @@ connectDB()
   });
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 const startServer = async () => {
   try {
@@ -162,25 +166,11 @@ const startServer = async () => {
       console.warn('Agenda setup failed, continuing without Agenda:', error.message);
     }
 
-    // Start Express server with port fallback
-    const server = app.listen(PORT, () => {
+    // Start Express server
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`Server running on port ${PORT}`);
       console.log(`Environment: ${process.env.NODE_ENV}`);
       console.log('Redis:', process.env.REDIS_ENABLED === 'true' ? 'Enabled' : 'Disabled');
-    }).on('error', (err) => {
-      if (err.code === 'EADDRINUSE') {
-        const nextPort = PORT + 1;
-        console.log(`Port ${PORT} is busy, trying ${nextPort}`);
-        server.close();
-        app.listen(nextPort, () => {
-          console.log(`Server running on port ${nextPort}`);
-          console.log(`Environment: ${process.env.NODE_ENV}`);
-          console.log('Redis:', process.env.REDIS_ENABLED === 'true' ? 'Enabled' : 'Disabled');
-        });
-      } else {
-        console.error('Server startup error:', err);
-        process.exit(1);
-      }
     });
   } catch (error) {
     console.error('Server startup error:', error);
