@@ -1,5 +1,7 @@
 # HealthTech Follow-Up Reminder System
 
+[HEALTHTECH PITCH DECK](https://www.canva.com/design/DAGoeWVFqZI/1OkefOrlBKvN6VnAcdFGzw/edit?utm_content=DAGoeWVFqZI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
 A comprehensive healthcare appointment management and reminder system built with modern web technologies.
 
 ## 🌟 Features
